@@ -1,8 +1,11 @@
+/* Grundfarben & Body */
 body {
     background-color: rgb(53, 48, 51);
+    margin: 0;
+    font-family: Arial, sans-serif;
 }
 
-
+/* Header / Titel */
 .title {
     color: pink;
     font-size: 50px;
@@ -10,10 +13,11 @@ body {
     padding: 20px;
 }
 
+/* LinkedIn Button */
 .linkedin_button {
     background-color: rgb(249, 169, 182);
     color: white;
-    font-family: Arial;
+    font-family: Arial, sans-serif;
     font-size: 20px;
     width: 200px;
     height: 40px;
@@ -21,8 +25,8 @@ body {
     border: none;
     margin: 20px;
     box-shadow: 4px 4px 10px rgba(0,0,0,0.5);
-    transition: background-color 0.3s ease;
-    transition: transform 0.2s ease;
+    cursor: pointer;
+    transition: background-color 0.3s ease, transform 0.2s ease;
 }
 
 .linkedin_button:hover {
@@ -30,34 +34,59 @@ body {
     transform: scale(1.05);
 }
 
-
+/* Bild */
 .dishwasher_photo {
-    width: 300px;
+    width: 100%;
+    max-width: 300px;
     height: auto;
+    border-radius: 10px;
 }
 
+/* Grid / Layout */
 .div_grid {
     display: flex;
     gap: 20px;
     justify-content: center;
     margin-top: 30px;
+    flex-wrap: wrap; /* erlaubt Umbruch auf kleinen Bildschirmen */
 }
 
+/* Textbereich */
 .about {
     color: pink;
+    max-width: 400px;
 }
 
 h2 {
     text-decoration: underline;
-    padding: 20px;
+    padding: 20px 0 10px 0;
+    text-align: left;
 }
 
 h3 {
-    padding: 0px 20px;
+    padding: 0 0 20px 0;
 }
 
 p {
-    width: 400px;
+    width: 100%;
+    max-width: 400px;
     word-wrap: break-word;
-    padding: 20px;
+    padding: 0 0 20px 0;
+}
+
+@media (max-width: 600px) {
+    .div_grid {
+        flex-direction: column; 
+        align-items: center;
+    }
+
+    h2, h3, p {
+        text-align: center;
+        padding: 10px;
+    }
+
+    .linkedin_button {
+        width: 80%;
+        max-width: 200px;
+    }
 }
