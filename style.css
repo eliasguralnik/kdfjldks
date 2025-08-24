@@ -1,0 +1,63 @@
+body {
+    background-color: rgb(53, 48, 51);
+}
+
+
+.title {
+    color: pink;
+    font-size: 50px;
+    text-align: center;
+    padding: 20px;
+}
+
+.linkedin_button {
+    background-color: rgb(249, 169, 182);
+    color: white;
+    font-family: Arial;
+    font-size: 20px;
+    width: 200px;
+    height: 40px;
+    border-radius: 10px;
+    border: none;
+    margin: 20px;
+    box-shadow: 4px 4px 10px rgba(0,0,0,0.5);
+    transition: background-color 0.3s ease;
+    transition: transform 0.2s ease;
+}
+
+.linkedin_button:hover {
+    background-color: rgb(210, 132, 145);
+    transform: scale(1.05);
+}
+
+
+.dishwasher_photo {
+    width: 300px;
+    height: auto;
+}
+
+.div_grid {
+    display: flex;
+    gap: 20px;
+    justify-content: center;
+    margin-top: 30px;
+}
+
+.about {
+    color: pink;
+}
+
+h2 {
+    text-decoration: underline;
+    padding: 20px;
+}
+
+h3 {
+    padding: 0px 20px;
+}
+
+p {
+    width: 400px;
+    word-wrap: break-word;
+    padding: 20px;
+}
