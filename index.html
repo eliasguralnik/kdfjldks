@@ -3,33 +3,628 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="style.css">
-    <title>Amalia the dishwasher</title>
+    <title>Amalia the Dishwasher</title>
+    <style>
+        /* CSS Variables for consistent theming */
+        :root {
+            --primary-bg: rgb(53, 48, 51);
+            --secondary-bg: rgb(45, 40, 43);
+            --accent-pink: #ff69b4;
+            --light-pink: rgb(249, 169, 182);
+            --dark-pink: rgb(210, 132, 145);
+            --text-light: #ffffff;
+            --shadow: rgba(0, 0, 0, 0.3);
+            --transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        /* Reset and base styles */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            background: linear-gradient(135deg, var(--primary-bg) 0%, var(--secondary-bg) 100%);
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.6;
+            color: var(--text-light);
+            overflow-x: hidden;
+        }
+
+        /* Smooth scrolling */
+        html {
+            scroll-behavior: smooth;
+        }
+
+        /* Navigation */
+        .navbar {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            background: rgba(53, 48, 51, 0.95);
+            backdrop-filter: blur(10px);
+            z-index: 1000;
+            transition: var(--transition);
+            padding: 20px 0;
+        }
+
+        .navbar.scrolled {
+            padding: 10px 0;
+            background: rgba(53, 48, 51, 0.98);
+            box-shadow: 0 2px 20px var(--shadow);
+        }
+
+        .navbar .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+            justify-content: center;
+            display: flex;
+        }
+
+        #typewriter {
+            font-family: monospace;
+            display: inline;
+            white-space: pre;
+            font-size: 30px;
+            color: #ff69b4;
+            text-align: center;
+        }
+        /* Blinkender Cursor */
+        .cursor {
+            display: inline-block;
+            width: 1px;
+            height: 35px;
+            margin-top: 5px;
+            background-color: rgba(247, 97, 247, 0.675);
+            animation: blink 0.9s steps(1) infinite;
+            vertical-align: bottom;
+        }
+        @keyframes blink {
+            50% { background-color: transparent; }
+        }
+
+        /* Hero Section */
+        .hero {
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 120px 20px 60px;
+            background: radial-gradient(ellipse at center, rgba(255, 105, 180, 0.1) 0%, transparent 70%);
+        }
+
+        .hero-content {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 60px;
+            max-width: 1200px;
+            align-items: center;
+        }
+
+        .hero-image {
+            position: relative;
+            display: flex;
+            justify-content: center;
+        }
+
+        .image-container {
+            aspect-ratio: 1;
+            clip-path: shape(from 44.55% 87.78%,curve to 35.00% 88.79% with 40.09% 88.59%,curve to 28.85% 82.68% with 29.91% 89.00%,curve to 20.73% 76.88% with 27.79% 76.36%,curve to 14.05% 71.69% with 13.66% 77.41%,curve to 15.09% 61.41% with 14.44% 65.96%,curve to 8.66% 52.78% with 15.73% 56.86%,curve to 2.22% 43.30% with 1.58% 48.70%,curve to 11.96% 36.50% with 2.87% 37.90%,curve to 19.61% 29.13% with 21.06% 35.09%,curve to 23.07% 21.99% with 18.16% 23.18%,curve to 30.42% 16.32% with 27.97% 20.80%,curve to 36.84% 7.92% with 32.87% 11.84%,curve to 45.90% 8.31% with 40.80% 4.01%,curve to 55.25% 12.83% with 51.01% 12.61%,curve to 65.94% 9.80% with 59.49% 13.06%,curve to 77.14% 9.34% with 72.39% 6.54%,curve to 84.34% 17.20% with 81.90% 12.14%,curve to 85.71% 28.36% with 86.78% 22.26%,curve to 87.87% 38.12% with 84.63% 34.46%,curve to 87.28% 46.34% with 91.11% 41.78%,curve to 89.62% 56.33% with 83.44% 50.90%,curve to 94.59% 67.06% with 95.81% 61.76%,curve to 88.06% 74.97% with 93.38% 72.35%,curve to 80.56% 82.61% with 82.74% 77.58%,curve to 74.29% 91.32% with 78.39% 87.63%,curve to 64.38% 93.91% with 70.20% 95.01%,curve to 53.78% 89.89% with 58.57% 92.81%,curve to 44.55% 87.78% with 49.00% 86.97%);
+            background: rgba(255, 192, 203, 0.2);
+            backdrop-filter: blur(15px) saturate(120%);
+            -webkit-backdrop-filter: blur(15px) saturate(120%);
+
+            /* Optionaler Rahmen */
+            border: 1px solid rgba(255, 192, 203, 0.4);
+            padding: 3px;
+            transition: var(--transition);
+            animation: float 6s ease-in-out infinite;
+            align-items: center;
+            display: flex;
+            justify-content: center;
+        }
+
+        .image-container:hover {
+            transform: scale(1.05);
+            filter: brightness(1.1);
+        }
+
+        .dishwasher-photo {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        @keyframes float {
+            0%, 100% { transform: translateY(0px); }
+            50% { transform: translateY(-20px); }
+        }
+
+        .hero-text {
+            opacity: 0;
+            animation: slideInRight 1s ease-out 0.5s forwards;
+        }
+
+        .hero-text h1 {
+            font-size: clamp(32px, 6vw, 48px);
+            margin-bottom: 20px;
+            color: var(--accent-pink);
+            text-underline-offset: 10px;
+        }
+
+        .hero-text p {
+            font-size: 18px;
+            margin-bottom: 20px;
+            color: rgba(255, 255, 255, 0.9);
+        }
+
+        .price, h2 {
+            font-size: 30px;
+            font-weight: bold;
+            color: var(--light-pink);
+            margin: 30px 0;
+            text-shadow: 2px 2px 4px var(--shadow);
+        }
+
+        /* Buttons */
+        .btn {
+            display: inline-block;
+            padding: 15px 30px;
+            background: linear-gradient(45deg, var(--light-pink), var(--dark-pink));
+            color: white;
+            text-decoration: none;
+            border-radius: 50px;
+            font-weight: 600;
+            font-size: 18px;
+            transition: var(--transition);
+            box-shadow: 0 8px 25px rgba(249, 169, 182, 0.3);
+            border: none;
+            cursor: pointer;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .btn::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
+            transition: left 0.5s;
+        }
+
+        .btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 12px 35px rgba(249, 169, 182, 0.4);
+        }
+
+        .btn:hover::before {
+            left: 100%;
+        }
+
+        .btn:active {
+            transform: translateY(-1px);
+        }
+
+        /* Services Section */
+        .services {
+            padding: 100px 20px;
+            background: rgba(0, 0, 0, 0.1);
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .section-title {
+            text-align: center;
+            font-size: 42px;
+            color: var(--accent-pink);
+            margin-bottom: 60px;
+            opacity: 0;
+            transform: translateY(30px);
+        }
+
+        .section-title.visible {
+            opacity: 1;
+            transform: translateY(0);
+            animation: fadeInUp 0.8s ease-out;
+        }
+
+        .services-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 40px;
+            margin-top: 50px;
+        }
+
+        .service-card {
+            background: rgba(255, 255, 255, 0.05);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 105, 180, 0.2);
+            border-radius: 20px;
+            padding: 40px 30px;
+            text-align: center;
+            transition: var(--transition);
+            opacity: 0;
+            transform: translateY(50px);
+        }
+
+        .service-card.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        .service-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 20px 40px rgba(249, 169, 182, 0.2);
+        }
+
+        .service-icon {
+            font-size: 48px;
+            margin-bottom: 20px;
+        }
+
+        .service-card h3 {
+            color: var(--light-pink);
+            font-size: 24px;
+            margin-bottom: 15px;
+        }
+
+        /* Contact Section */
+        .contact {
+            padding: 100px 20px;
+            background: linear-gradient(135deg, rgba(255, 105, 180, 0.1) 0%, transparent 100%);
+        }
+
+        .contact-form {
+            max-width: 600px;
+            margin: 0 auto;
+            background: rgba(255, 255, 255, 0.05);
+            backdrop-filter: blur(15px);
+            border: 1px solid rgba(255, 105, 180, 0.2);
+            border-radius: 20px;
+            padding: 50px;
+            box-shadow: 0 20px 40px var(--shadow);
+        }
+
+        .form-group {
+            margin-bottom: 30px;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 10px;
+            color: pink;
+            font-weight: 600;
+        }
+
+        .form-group input,
+        .form-group textarea {
+            width: 100%;
+            padding: 15px;
+            border: 2px solid rgba(255, 192, 203, 0.417);
+            border-radius: 10px;
+            background: rgba(255, 255, 255, 0.1);
+            color: white;
+            font-size: 16px;
+            transition: var(--transition);
+        }
+
+        .form-group input:focus,
+        .form-group textarea:focus {
+            outline: none;
+            border-color: var(--accent-pink);
+            box-shadow: 0 0 20px rgba(255, 105, 180, 0.3);
+        }
+
+        .form-group textarea {
+            resize: vertical;
+            min-height: 120px;
+        }
+
+        /* Footer */
+        .footer {
+            background: var(--secondary-bg);
+            padding: 40px 20px;
+            text-align: center;
+            border-top: 1px solid rgba(255, 105, 180, 0.2);
+        }
+
+        .footer p {
+            color: rgba(255, 255, 255, 0.7);
+            font-size: 16px;
+        }
+
+        /* Animations */
+        @keyframes slideInRight {
+            from {
+                opacity: 0;
+                transform: translateX(50px);
+            }
+            to {
+                opacity: 1;
+                transform: translateX(0);
+            }
+        }
+
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            .hero-content {
+                grid-template-columns: 1fr;
+                gap: 40px;
+                text-align: center;
+            }
+
+            .image-container {
+                width: 250px;
+                height: 320px;
+            }
+
+            .contact-form {
+                margin: 0 20px;
+                padding: 30px;
+            }
+
+            .services-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
 </head>
 <body>
-    <header>
-        <nav>
-            <div class="title">Hello, I'm the best dishwasher in the whole world</div>
-        </nav>
-    </header>
-    <main>
-        
-        <div class="div_grid">
-            <img src="foto.png" alt="Image not available" class="dishwasher_photo">
-            <div class="about">
+    <!-- Navigation -->
+    <nav class="navbar" id="navbar">
+        <div class="container">
+            <div id="typewriter"></div><span class="cursor"></span>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section class="hero" id="hero">
+        <div class="hero-content">
+            <div class="hero-image">
+                <div class="image-container">
+                    <img src="foto_.png" alt="Amalia Mishchenko - Professional Dishwasher" class="dishwasher-photo">
+                </div>
+            </div>
+            <div class="hero-text">
                 <h2>Amalia Mishchenko</h2>
-                <p>I am the ultimate dishwasher – the best in the world at what I do! Reliable, efficient, and thorough, I make sure every plate, glass, and utensil sparkles like new. Whether it’s a small kitchen or a large commercial setup, I can handle any workload with speed and precision.
-
-                Now available for rent at the most competitive price, I am ready to take on any task you need. From delicate glassware to heavily soiled pots and pans, I guarantee spotless results every time. Your satisfaction is my priority, and I am committed to delivering excellence in every wash.
-
-                Don’t settle for anything less than perfection – let me take care of your dishes and make your life easier. I am here to serve, adapt, and exceed your expectations, whatever your needs may be!</p>
-                <h3>400$ /h</h3>
-                <a href="https://www.linkedin.com/in/amalia-mishchenko-17b147380?utm_source=share&utm_campaign=share_via&utm_content=profile&utm_medium=ios_app" target="_blank"><button class="linkedin_button">My LinkedIn</button></a>
+                <p>I am the ultimate dishwasher — the best in the world at what I do! Reliable, efficient, and thorough, I make sure every plate, glass, and utensil sparkles like new.</p>
+                <p>Whether it's a small kitchen or a large commercial setup, I can handle any workload with speed and precision. Your satisfaction is my priority, and I am committed to delivering excellence in every wash.</p>
+                <div class="price">$400/hour</div>
+                <a href="https://www.linkedin.com/in/amalia-mishchenko-17b147380?utm_source=share&utm_campaign=share_via&utm_content=profile&utm_medium=ios_app" target="_blank" class="btn">
+                    Connect on LinkedIn
+                </a>
             </div>
         </div>
-    </main>
-    <footer>
-        
+    </section>
+
+    <!-- Services Section -->
+    <section class="services" id="services">
+        <div class="container">
+            <h2 class="section-title">Premium Services</h2>
+            <div class="services-grid">
+                <div class="service-card">
+                    <div class="service-icon">🍽️</div>
+                    <h3>Delicate Glassware</h3>
+                    <p>Expert handling of fine china, crystal glasses, and delicate dishware with zero breakage guarantee.</p>
+                </div>
+                <div class="service-card">
+                    <div class="service-icon">🍳</div>
+                    <h3>Heavy-Duty Cleaning</h3>
+                    <p>Tackling the toughest grease and burnt-on food from pots, pans, and commercial cookware.</p>
+                </div>
+                <div class="service-card">
+                    <div class="service-icon">⚡</div>
+                    <h3>Speed & Efficiency</h3>
+                    <p>Lightning-fast service without compromising quality. Perfect for busy restaurants and events.</p>
+                </div>
+                <div class="service-card">
+                    <div class="service-icon">✨</div>
+                    <h3>Spotless Results</h3>
+                    <p>Every dish emerges sparkling clean with my signature attention to detail and perfectionist approach.</p>
+                </div>
+                <div class="service-card">
+                    <div class="service-icon">🏢</div>
+                    <h3>Commercial Scale</h3>
+                    <p>From intimate dinners to large banquets, I adapt to any volume with consistent excellence.</p>
+                </div>
+                <div class="service-card">
+                    <div class="service-icon">🌟</div>
+                    <h3>Premium Experience</h3>
+                    <p>More than just dishwashing - providing a complete kitchen support experience that exceeds expectations.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Contact Section -->
+    <section class="contact" id="contact">
+        <div class="container">
+            <h2 class="section-title">Get In Touch</h2>
+            <form class="contact-form" id="contactForm">
+                <div class="form-group">
+                    <label for="name">Full Name</label>
+                    <input type="text" id="name" name="name" required>
+                </div>
+                <div class="form-group">
+                    <label for="email">Email Address</label>
+                    <input type="email" id="email" name="email" required>
+                </div>
+                <div class="form-group">
+                    <label for="phone">Phone Number</label>
+                    <input type="tel" id="phone" name="phone" required>
+                </div>
+                <div class="form-group">
+                    <label for="event">Event Type & Date</label>
+                    <input type="text" id="event" name="event" placeholder="e.g., Wedding Reception - June 15th" required>
+                </div>
+                <div class="form-group">
+                    <label for="message">Additional Details</label>
+                    <textarea id="message" name="message" placeholder="Tell me about your dishwashing needs..."></textarea>
+                </div>
+                <button type="submit" class="btn">Send Message</button>
+            </form>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <p>&copy; 2025 Guralnik. All rights reserved.</p>
+        </div>
     </footer>
+
+    <script>
+        // Typewriter effect for the title
+        const text = "Amalia the dishwasher";
+        const typewriter = document.getElementById('typewriter');
+        let index = 0;
+
+        function typeWriter() {
+            if (index < text.length) {
+                typewriter.textContent += text.charAt(index);
+                index++;
+                setTimeout(typeWriter, 100);
+            }
+            else {
+        // Nach dem Schreiben kurz warten, dann löschen und neu starten
+        setTimeout(() => {
+            typewriter.textContent = '';
+            index = 0;
+            typeWriter();
+        }, 5000);
+    }
+        }
+
+        // Start typewriter effect when page loads
+        window.addEventListener('load', () => {
+            setTimeout(typeWriter, 500);
+        });
+
+        // Navbar scroll effect
+        const navbar = document.getElementById('navbar');
+        
+        window.addEventListener('scroll', () => {
+            if (window.scrollY > 100) {
+                navbar.classList.add('scrolled');
+            } else {
+                navbar.classList.remove('scrolled');
+            }
+        });
+
+        // Scroll animations for sections
+        const observerOptions = {
+            threshold: 0.2,
+            rootMargin: '0px 0px -100px 0px'
+        };
+
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('visible');
+                }
+            });
+        }, observerOptions);
+
+        // Observe section titles and service cards
+        document.addEventListener('DOMContentLoaded', () => {
+            const elementsToObserve = document.querySelectorAll('.section-title, .service-card');
+            elementsToObserve.forEach(el => observer.observe(el));
+        });
+
+        // Staggered animation for service cards
+        const serviceCards = document.querySelectorAll('.service-card');
+        const cardObserver = new IntersectionObserver((entries) => {
+            entries.forEach((entry, index) => {
+                if (entry.isIntersecting) {
+                    setTimeout(() => {
+                        entry.target.classList.add('visible');
+                    }, index * 200);
+                }
+            });
+        }, { threshold: 0.2 });
+
+        serviceCards.forEach(card => cardObserver.observe(card));
+
+        // Contact form submission
+        const contactForm = document.getElementById('contactForm');
+        
+        contactForm.addEventListener('submit', async (e) => {
+            e.preventDefault();
+            
+            const formData = {
+                name: document.getElementById('name').value,
+                email: document.getElementById('email').value,
+                phone: document.getElementById('phone').value,
+                event: document.getElementById('event').value,
+                message: document.getElementById('message').value
+            };
+
+            try {
+                const response = await fetch('https://server-amalia-website.onrender.com/contact', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify(formData)
+                });
+
+                if (response.ok) {
+                    alert('Message sent successfully! I will get back to you soon.');
+                    contactForm.reset();
+                } else {
+                    throw new Error('Failed to send message');
+                }
+            } catch (error) {
+                console.error('Error:', error);
+                alert('There was an error sending your message. Please try again later.');
+            }
+        });
+
+        // Smooth scroll for anchor links
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) {
+                    target.scrollIntoView({
+                        behavior: 'smooth',
+                        block: 'start'
+                    });
+                }
+            });
+        });
+
+        // Add some interactive elements
+        const buttons = document.querySelectorAll('.btn');
+        buttons.forEach(button => {
+            button.addEventListener('mouseenter', () => {
+                button.style.transform = 'translateY(-3px) scale(1.02)';
+            });
+            
+            button.addEventListener('mouseleave', () => {
+                button.style.transform = 'translateY(0) scale(1)';
+            });
+        });
+    </script>
 </body>
 </html>

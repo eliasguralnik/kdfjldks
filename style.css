@@ -80,7 +80,7 @@ p {
         align-items: center;
     }
 
-    h2, h3, p {
+    h2, h3, p, img{
         text-align: center;
         padding: 10px;
         max-width: 400px;
