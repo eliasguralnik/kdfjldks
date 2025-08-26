@@ -211,6 +211,8 @@
         font-family: Arial, sans-serif;
         }
 
+        
+
         .old-price {
             color: #888;
             text-decoration: line-through;
@@ -218,13 +220,13 @@
         }
 
         .new-price {
-            color: #e60023; /* kräftiges Rot */
+            color: var(--light-pink); /* kräftiges Rot */
             font-size: 36px;
             text-shadow: 2px 2px 6px var(--shadow);
         }
 
         .sale-badge {
-            background: linear-gradient(135deg, #ff4d4d, #e60023);
+            background: #ff69b4;
             color: white;
             font-size: 16px;
             font-weight: bold;
@@ -452,6 +454,21 @@
 
             .services-grid {
                 grid-template-columns: 1fr;
+            }
+
+            .price-box {
+                font-size: 20px;
+                font-weight: 500;
+                justify-content: center;
+                display: flex;
+            }
+
+            .new-price {
+                font-size: 26px;
+            }
+
+            .sale-badge {
+                padding: 4px 9px;
             }
         }
     </style>
