@@ -17,6 +17,38 @@
             --transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
         }
 
+                /* Loader Hintergrund */
+        #loader {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background: rgb(53, 48, 51);
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        z-index: 9999;
+        }
+
+        /* Spinner (Kreis der sich dreht) */
+        .spinner {
+        border: 8px solid #f3f3f3;
+        border-top: 6px solid pink;
+        border-radius: 50%;
+        width: 70px;
+        height: 70px;
+        animation: spin 1s linear infinite;
+        margin-bottom: 20px;
+        }
+
+        @keyframes spin {
+        0% { transform: rotate(0deg); }
+        100% { transform: rotate(360deg); }
+        }
+
+
         /* Reset and base styles */
         * {
             margin: 0;
@@ -425,112 +457,120 @@
     </style>
 </head>
 <body>
-    <!-- Navigation -->
-    <nav class="navbar" id="navbar">
-        <div class="container">
-            <div id="typewriter"></div><span class="cursor"></span>
-        </div>
-    </nav>
+    <!-- Loader -->
+    <div id="loader">
+        <div class="spinner"></div>
+        <p>Loading...</p>
+    </div>
+    <div id="content" style="display: none;">
+            <!-- Navigation -->
+        <nav class="navbar" id="navbar">
+            <div class="container">
+                <div id="typewriter"></div><span class="cursor"></span>
+            </div>
+        </nav>
 
-    <!-- Hero Section -->
-    <section class="hero" id="hero">
-        <div class="hero-content">
-            <div class="hero-image">
-                <div class="image-container">
-                    <img src="foto_.png" alt="Amalia Mishchenko - Professional Dishwasher" class="dishwasher-photo">
+        <!-- Hero Section -->
+        <section class="hero" id="hero">
+            <div class="hero-content">
+                <div class="hero-image">
+                    <div class="image-container">
+                        <img src="foto_.png" alt="Amalia Mishchenko - Professional Dishwasher" class="dishwasher-photo">
+                    </div>
+                </div>
+                <div class="hero-text">
+                    <h2>Amalia Mishchenko</h2>
+                    <p>I am the ultimate dishwasher — the best in the world at what I do! Reliable, efficient, and thorough, I make sure every plate, glass, and utensil sparkles like new.</p>
+                    <p>Whether it's a small kitchen or a large commercial setup, I can handle any workload with speed and precision. Your satisfaction is my priority, and I am committed to delivering excellence in every wash.</p>
+                    <div class="price-box">
+                        <span class="old-price">$400/hour</span>
+                        <span class="new-price">$5/hour</span>
+                        <span class="sale-badge">Sale</span>
+                    </div>
+                    <a href="https://www.linkedin.com/in/amalia-mishchenko-17b147380?utm_source=share&utm_campaign=share_via&utm_content=profile&utm_medium=ios_app" target="_blank" class="btn">
+                        Connect on LinkedIn
+                    </a>
                 </div>
             </div>
-            <div class="hero-text">
-                <h2>Amalia Mishchenko</h2>
-                <p>I am the ultimate dishwasher — the best in the world at what I do! Reliable, efficient, and thorough, I make sure every plate, glass, and utensil sparkles like new.</p>
-                <p>Whether it's a small kitchen or a large commercial setup, I can handle any workload with speed and precision. Your satisfaction is my priority, and I am committed to delivering excellence in every wash.</p>
-                <div class="price-box">
-                    <span class="old-price">$400/hour</span>
-                    <span class="new-price">$5/hour</span>
-                    <span class="sale-badge">Sale</span>
-                </div>
-                <a href="https://www.linkedin.com/in/amalia-mishchenko-17b147380?utm_source=share&utm_campaign=share_via&utm_content=profile&utm_medium=ios_app" target="_blank" class="btn">
-                    Connect on LinkedIn
-                </a>
-            </div>
-        </div>
-    </section>
+        </section>
 
-    <!-- Services Section -->
-    <section class="services" id="services">
-        <div class="container">
-            <h2 class="section-title">Premium Services</h2>
-            <div class="services-grid">
-                <div class="service-card">
-                    <div class="service-icon">🍽️</div>
-                    <h3>Delicate Glassware</h3>
-                    <p>Expert handling of fine china, crystal glasses, and delicate dishware with zero breakage guarantee.</p>
-                </div>
-                <div class="service-card">
-                    <div class="service-icon">🍳</div>
-                    <h3>Heavy-Duty Cleaning</h3>
-                    <p>Tackling the toughest grease and burnt-on food from pots, pans, and commercial cookware.</p>
-                </div>
-                <div class="service-card">
-                    <div class="service-icon">⚡</div>
-                    <h3>Speed & Efficiency</h3>
-                    <p>Lightning-fast service without compromising quality. Perfect for busy restaurants and events.</p>
-                </div>
-                <div class="service-card">
-                    <div class="service-icon">✨</div>
-                    <h3>Spotless Results</h3>
-                    <p>Every dish emerges sparkling clean with my signature attention to detail and perfectionist approach.</p>
-                </div>
-                <div class="service-card">
-                    <div class="service-icon">🏢</div>
-                    <h3>Commercial Scale</h3>
-                    <p>From intimate dinners to large banquets, I adapt to any volume with consistent excellence.</p>
-                </div>
-                <div class="service-card">
-                    <div class="service-icon">🌟</div>
-                    <h3>Premium Experience</h3>
-                    <p>More than just dishwashing - providing a complete kitchen support experience that exceeds expectations.</p>
+        <!-- Services Section -->
+        <section class="services" id="services">
+            <div class="container">
+                <h2 class="section-title">Premium Services</h2>
+                <div class="services-grid">
+                    <div class="service-card">
+                        <div class="service-icon">🍽️</div>
+                        <h3>Delicate Glassware</h3>
+                        <p>Expert handling of fine china, crystal glasses, and delicate dishware with zero breakage guarantee.</p>
+                    </div>
+                    <div class="service-card">
+                        <div class="service-icon">🍳</div>
+                        <h3>Heavy-Duty Cleaning</h3>
+                        <p>Tackling the toughest grease and burnt-on food from pots, pans, and commercial cookware.</p>
+                    </div>
+                    <div class="service-card">
+                        <div class="service-icon">⚡</div>
+                        <h3>Speed & Efficiency</h3>
+                        <p>Lightning-fast service without compromising quality. Perfect for busy restaurants and events.</p>
+                    </div>
+                    <div class="service-card">
+                        <div class="service-icon">✨</div>
+                        <h3>Spotless Results</h3>
+                        <p>Every dish emerges sparkling clean with my signature attention to detail and perfectionist approach.</p>
+                    </div>
+                    <div class="service-card">
+                        <div class="service-icon">🏢</div>
+                        <h3>Commercial Scale</h3>
+                        <p>From intimate dinners to large banquets, I adapt to any volume with consistent excellence.</p>
+                    </div>
+                    <div class="service-card">
+                        <div class="service-icon">🌟</div>
+                        <h3>Premium Experience</h3>
+                        <p>More than just dishwashing - providing a complete kitchen support experience that exceeds expectations.</p>
+                    </div>
                 </div>
             </div>
-        </div>
-    </section>
+        </section>
 
-    <!-- Contact Section -->
-    <section class="contact" id="contact">
-        <div class="container">
-            <h2 class="section-title">Get In Touch</h2>
-            <form class="contact-form" id="contactForm">
-                <div class="form-group">
-                    <label for="name">Full Name</label>
-                    <input type="text" id="name" name="name" required>
-                </div>
-                <div class="form-group">
-                    <label for="email">Email Address</label>
-                    <input type="email" id="email" name="email" required>
-                </div>
-                <div class="form-group">
-                    <label for="phone">Phone Number</label>
-                    <input type="tel" id="phone" name="phone" required>
-                </div>
-                <div class="form-group">
-                    <label for="event">Event Type & Date</label>
-                    <input type="text" id="event" name="event" placeholder="e.g., Wedding Reception - June 15th" required>
-                </div>
-                <div class="form-group">
-                    <label for="message">Additional Details</label>
-                    <textarea id="message" name="message" placeholder="Tell me about your dishwashing needs..."></textarea>
-                </div>
-                <button type="submit" class="btn">Send Message</button>
-            </form>
-        </div>
-    </section>
+        <!-- Contact Section -->
+        <section class="contact" id="contact">
+            <div class="container">
+                <h2 class="section-title">Get In Touch</h2>
+                <form class="contact-form" id="contactForm">
+                    <div class="form-group">
+                        <label for="name">Full Name</label>
+                        <input type="text" id="name" name="name" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="email">Email Address</label>
+                        <input type="email" id="email" name="email" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="phone">Phone Number</label>
+                        <input type="tel" id="phone" name="phone" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="event">Event Type & Date</label>
+                        <input type="text" id="event" name="event" placeholder="e.g., Wedding Reception - June 15th" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="message">Additional Details</label>
+                        <textarea id="message" name="message" placeholder="Tell me about your dishwashing needs..."></textarea>
+                    </div>
+                    <button type="submit" class="btn">Send Message</button>
+                </form>
+            </div>
+        </section>
 
-    <!-- Footer -->
-    <footer class="footer">
-        <div class="container">
-            <p>&copy; 2025 Guralnik. All rights reserved.</p>
-        </div>
-    </footer>
+        <!-- Footer -->
+        <footer class="footer">
+            <div class="container">
+                <p>&copy; 2025 Guralnik. All rights reserved.</p>
+            </div>
+        </footer>
+    </div>
+
 
     <script>
         // Typewriter effect for the title
@@ -664,6 +704,22 @@
                 button.style.transform = 'translateY(0) scale(1)';
             });
         });
+window.addEventListener("load", () => {
+    const loader = document.getElementById("loader");
+    const content = document.getElementById("content");
+
+    // Content sofort sichtbar machen
+    content.style.display = "block";
+
+    // Loader langsam ausblenden
+    loader.classList.add("hidden");
+
+    // Nach der Transition komplett entfernen (optional)
+    setTimeout(() => {
+        loader.style.display = "none";
+    }, 600); // gleiche Zeit wie transition
+});
+
     </script>
 </body>
 </html>
