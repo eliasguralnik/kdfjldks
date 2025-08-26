@@ -169,6 +169,41 @@
             text-shadow: 2px 2px 4px var(--shadow);
         }
 
+        .price-box {
+        font-size: 30px;
+        font-weight: bold;
+        margin: 30px 0;
+        display: flex;
+        align-items: center;
+        gap: 15px;
+        font-family: Arial, sans-serif;
+        }
+
+        .old-price {
+            color: #888;
+            text-decoration: line-through;
+            text-shadow: 2px 2px 4px var(--shadow);
+        }
+
+        .new-price {
+            color: #e60023; /* kräftiges Rot */
+            font-size: 36px;
+            text-shadow: 2px 2px 6px var(--shadow);
+        }
+
+        .sale-badge {
+            background: linear-gradient(135deg, #ff4d4d, #e60023);
+            color: white;
+            font-size: 16px;
+            font-weight: bold;
+            padding: 5px 12px;
+            border-radius: 20px;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            box-shadow: 2px 2px 6px var(--shadow);
+        }
+
+
         /* Buttons */
         .btn {
             display: inline-block;
@@ -409,7 +444,11 @@
                 <h2>Amalia Mishchenko</h2>
                 <p>I am the ultimate dishwasher — the best in the world at what I do! Reliable, efficient, and thorough, I make sure every plate, glass, and utensil sparkles like new.</p>
                 <p>Whether it's a small kitchen or a large commercial setup, I can handle any workload with speed and precision. Your satisfaction is my priority, and I am committed to delivering excellence in every wash.</p>
-                <div class="price">$400/hour</div>
+                <div class="price-box">
+                    <span class="old-price">$400/hour</span>
+                    <span class="new-price">$5/hour</span>
+                    <span class="sale-badge">Sale</span>
+                </div>
                 <a href="https://www.linkedin.com/in/amalia-mishchenko-17b147380?utm_source=share&utm_campaign=share_via&utm_content=profile&utm_medium=ios_app" target="_blank" class="btn">
                     Connect on LinkedIn
                 </a>
