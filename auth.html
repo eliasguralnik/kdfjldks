@@ -1,0 +1,184 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Comic+Relief:wght@400;700&display=swap" rel="stylesheet">
+    <title>Authentification</title>
+    <style>
+        body {
+            background: rgb(53, 48, 51);
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.6;
+            overflow-x: hidden;
+        }
+
+        h3 {
+            font-size: 40px;
+            color: white;
+            font-weight: 900;
+            font-family: "Comic Relief", system-ui;
+            font-style: normal;
+        }
+
+        .auth-screen {
+            height: 100vh; 
+            display: flex;
+            justify-content: center; 
+            align-items: center;   
+        }
+
+        .auth {
+            margin: 30px;
+            padding: 40px;
+            width: 500px;
+            text-align: center;
+            border-radius: 20px;
+            border: 1px solid rgba(255, 105, 180, 0.2);
+            background: rgba(255, 255, 255, 0.05);
+            backdrop-filter: blur(10px);
+            box-shadow: 0 20px 40px rgba(249, 169, 182, 0.2);
+        }
+
+        .auth div.form { display: none; }
+        .auth div.form.active { display: block; }
+
+        .sender-button {
+            margin-top: 10px;
+            padding: 12px 22px;
+            width: 130px;
+            font-size: 18px;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            background-color: pink;
+            color: white;
+        }
+
+        .sender-button:active {
+            background-color: rgb(240, 161, 174);
+        }
+
+        .switch {
+            background: transparent;
+            color: white;
+            font-size: 16px;
+            text-decoration: underline;
+            margin-top: 25px;
+            cursor: pointer;
+            border: none;
+            padding: 10px;
+        }
+
+        input {
+            border: 2px solid pink;
+            border-radius: 9px;
+            height: 30px;
+            width: 220px;
+            font-size: 16px;
+            background-color: rgba(255, 255, 255, 0.05);
+            padding: 3px 7px;
+            color: white;
+        }
+ 
+    </style>
+</head>
+
+<body>
+    <div class="auth-screen">
+        <div class="auth">
+
+        <!-- Login Form -->
+        <div id="log" class="form active">
+            <h3>Login</h3>
+            <input type="email" id="login-email" placeholder="Email" required><br><br>
+            <input type="password" id="login-password" placeholder="Passwort" required><br><br>
+            <button class="sender-button" onclick="loginUser()">Login</button>
+            <div>
+                <button class="switch" onclick="showForm('reg')">No account yet? Sign Up</button>
+            </div>
+        </div>
+
+        <!-- Sign Up Form -->
+        <div id="reg" class="form">
+            <h3>Sign Up</h3>
+            <input type="text" id="signup-name" placeholder="Full Name" required><br><br>
+            <input type="email" id="signup-email" placeholder="Email" required><br><br>
+            <input type="password" id="signup-password" placeholder="Passwort" required><br><br>
+            <button class="sender-button" onclick="registerUser()">Sign Up</button>
+            <div>
+                <button class="switch" onclick="showForm('log')">already have an account? Login</button>    
+            </div>
+        </div>
+
+    </div>
+  </div>
+
+  <script>
+    function showForm(formId) {
+      document.querySelectorAll(".auth .form").forEach(div => {
+        div.classList.remove("active");
+      });
+      document.getElementById(formId).classList.add("active");
+    }
+
+    async function registerUser() {
+      const data = {
+  username: document.getElementById("signup-name").value,
+  email: document.getElementById("signup-email").value,
+  password: document.getElementById("signup-password").value, // <-- nicht mehr password_hash
+  is_admin: false
+};
+
+
+      const res = await fetch("https://server-amalia-website.onrender.com/reg", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(data)
+      });
+
+      const result = await res.json();
+      console.log(result);
+
+      if (result.status === true && !result.error) {
+          // Session-Cookie setzen
+          document.cookie = `session_id=${result.session_uuid}; path=/; max-age=86400`;
+          // Username-Cookie setzen
+          document.cookie = `username=${result.username}; path=/; max-age=86400`;
+
+          // Auf index.html weiterleiten
+          window.location.href = "index.html";
+      } else {
+          alert("Registration failed: " + result.error);
+      }
+    }
+
+    async function loginUser() {
+  const data = {
+    email: document.getElementById("login-email").value,
+    password: document.getElementById("login-password").value   // <-- HIER statt password_hash
+  };
+
+  const res = await fetch("https://server-amalia-website.onrender.com/login", {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify(data)
+  });
+
+  const result = await res.json();
+  console.log(result);
+
+  if (result.status === true && !result.error) {
+      document.cookie = `session_id=${result.session_uuid}; path=/; max-age=86400`;
+      document.cookie = `username=${result.username}; path=/; max-age=86400`;
+      window.location.href = "index.html";
+  } else {
+      alert("Login failed: " + result.error);
+  }
+}
+
+  </script>
+</body>
+</html>
