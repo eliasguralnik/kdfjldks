@@ -600,6 +600,129 @@
                 width: 50px;
             }
         }
+            /* ---Review Section */
+        .review-box {
+        background: rgba(255, 255, 255, 0.05);
+        border-radius: 20px;
+        border: 1px solid rgba(255, 105, 180, 0.2);
+        padding: 30px;
+        margin-bottom: 40px;
+        }
+
+        .overall-rating {
+        margin-bottom: 20px;
+        font-size: 16px;
+        }
+        .overall-rating strong {
+        font-size: 20px;
+        color: gold;
+        }
+
+        .stars {
+        display: flex;
+        gap: 8px;
+        font-size: 40px;
+        cursor: pointer;
+        }
+        .star {
+        color: gray;
+        transition: color 0.2s, transform 0.15s;
+        user-select: none;
+        }
+        .star:hover {
+        transform: scale(1.1);
+        }
+        .star.active,
+        .star.hover {
+        color: gold;
+        }
+
+        #output {
+        margin-top: 10px;
+        font-size: 14px;
+        color: #ccc;
+        }
+
+        .comments {
+        margin-top: 25px;
+        }
+
+        .toggle-comments {
+        background: none;
+        border: none;
+        color: hotpink;
+        font-weight: 600;
+        cursor: pointer;
+        margin-top: 10px;
+        }
+        .toggle-comments:hover {
+        text-decoration: underline;
+        }
+
+        .comment-list {
+        display: none;
+        margin-top: 10px;
+        }
+
+        .comment-form {
+        display: flex;
+        gap: 10px;
+        margin-bottom: 15px;
+        }
+        .write-comment-input {
+        flex: 1;
+        height: 35px;
+        padding: 6px 10px;
+        font-size: 15px;
+        color: white;
+        border: none;
+        border-bottom: 2px solid #7c7c7c;
+        background-color: transparent;
+        transition: border-color 0.2s;
+        }
+        .write-comment-input:focus {
+        outline: none;
+        border-bottom: 2px solid #fff;
+        }
+        .send-btn {
+        background: none;
+        border: none;
+        cursor: pointer;
+        padding: 0;
+        margin-left: 10px;
+        }
+
+        .send-icon {
+        width: 20px;
+        height: 20px;
+        filter: invert(39%) sepia(83%) saturate(2476%) hue-rotate(305deg) brightness(100%) contrast(97%);
+        transition: transform 0.2s;
+        transform: translateX(-50px);
+        }
+
+        .send-btn:hover .send-icon {
+        transform: scale(1.2) translateX(-50px);
+        }
+
+        .comment {
+        margin-top: 12px;
+        padding: 10px 12px;
+        background: rgba(255, 255, 255, 0.08);
+        border-radius: 8px;
+        }
+        .comment-name {
+        font-size: 15px;
+        font-weight: 600;
+        }
+        .commentar {
+        font-size: 14px;
+        margin-top: 4px;
+        }
+        .comment-date {
+        font-size: 12px;
+        margin-top: 2px;
+        color: #aaa;
+        }
     </style>
 </head>
 <body>
@@ -682,7 +805,7 @@
             </div>
         </section>
 
-        <!-- Services Section -->
+        <!-- About ME Section -->
         <section class="about-me" id="about-me">
             <div class="container">
                 <h2 class="section-title">About Me</h2>
@@ -691,6 +814,40 @@
                         Hi, I’m Amalia! I’m someone who believes in kindness, honesty, and putting real care into everything I do. I like when things feel neat and balanced — it makes life calmer and people happier. Friends usually say I’m reliable, easy to talk to, and maybe a little too much of a perfectionist (but I think that’s a good thing!). For me, even small details matter, because they show respect for the people around you.</p>
                 </div>
             </div>
+        </section>
+
+        <section class="reviews" id="reviews">
+        <div class="container">
+            <h2 class="section-title">Reviews</h2>
+            <div class="review-box">
+            <div class="overall-rating">
+                <strong>⭐ 0</strong> von 5 — basierend auf 0 Bewertungen
+            </div>
+
+            <div class="rating">
+                <div class="stars">
+                <span class="star" data-value="1">★</span>
+                <span class="star" data-value="2">★</span>
+                <span class="star" data-value="3">★</span>
+                <span class="star" data-value="4">★</span>
+                <span class="star" data-value="5">★</span>
+                </div>
+                <p id="output"></p>
+            </div>
+
+            <div class="comment-form">
+                <input type="text" placeholder="Write a comment..." class="write-comment-input" id="commentInput">
+                <button class="send-btn" id="sendBtn">
+                <img src="send.png" alt="Send" class="send-icon">
+                </button>
+            </div>
+
+            <div class="comments">
+                <button class="toggle-comments">Show comments</button>
+                <div class="comment-list"></div>
+            </div>
+        </div>
+        </div>
         </section>
 
         <!-- Contact Section -->
@@ -913,6 +1070,113 @@ if (sessionId) {
     // Bei Resize dynamisch updaten
     window.addEventListener("resize", updateUserNameDisplay);
 }
+
+
+    // Cookie-Funktion
+    function getCookie(name) {
+      const value = `; ${document.cookie}`;
+      const parts = value.split(`; ${name}=`);
+      if (parts.length === 2) return parts.pop().split(';').shift();
+    }
+
+    const sessionID= getCookie('session_id');
+    const username = getCookie('username') || 'Anonymous';
+
+    const stars = document.querySelectorAll('.star');
+    const output = document.getElementById('output');
+    let currentRating = 0;
+    const commentInput = document.getElementById('commentInput');
+    const sendBtn = document.getElementById('sendBtn');
+    const commentList = document.querySelector('.comment-list');
+
+    // Sterne Logik
+    stars.forEach(star => {
+      star.addEventListener('click', async () => {
+        if (!sessionId) return alert('Bitte anmelden!');
+        currentRating = parseInt(star.dataset.value);
+        updateStars();
+        output.textContent = `Du hast ${currentRating} Stern(e) gewählt`;
+
+        await fetch('http://localhost:8000/reviews', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+            'Authorization': `Bearer ${sessionId}`
+          },
+          body: JSON.stringify({rating: currentRating, username: username})
+        });
+
+        loadReviews();
+      });
+
+      star.addEventListener('mouseover', () => updateStars(parseInt(star.dataset.value)));
+      star.addEventListener('mouseout', () => updateStars());
+    });
+
+    function updateStars(hoverValue = 0) {
+      stars.forEach(s => s.classList.remove('active', 'hover'));
+      stars.forEach((s, i) => {
+        if (hoverValue && i < hoverValue) s.classList.add('hover');
+        else if (!hoverValue && i < currentRating) s.classList.add('active');
+      });
+    }
+
+    // Kommentar senden
+    function addComment(text, user = username, date = new Date().toLocaleDateString()) {
+      const commentDiv = document.createElement('div');
+      commentDiv.classList.add('comment');
+      commentDiv.innerHTML = `
+        <div class="comment-name">${user}</div>
+        <div class="commentar">${text}</div>
+        <div class="comment-date">${date}</div>
+      `;
+      commentList.appendChild(commentDiv);
+    }
+
+    sendBtn.addEventListener('click', async () => {
+      if (!sessionId) return alert('Bitte anmelden!');
+      const text = commentInput.value.trim();
+      if (!text) return;
+      addComment(text);
+
+      await fetch('http://localhost:8000/comment', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          'Authorization': `Bearer ${sessionId}`
+        },
+        body: JSON.stringify({comment: text, username})
+      });
+
+      commentInput.value = '';
+      loadReviews();
+    });
+
+    commentInput.addEventListener('keypress', e => {
+      if (e.key === 'Enter') sendBtn.click();
+    });
+
+    // Toggle Kommentare
+    const toggleBtn = document.querySelector('.toggle-comments');
+    toggleBtn.addEventListener('click', () => {
+      const isVisible = commentList.style.display === 'block';
+      commentList.style.display = isVisible ? 'none' : 'block';
+      toggleBtn.textContent = isVisible ? 'Show comments' : 'Hide comments';
+    });
+
+    // Daten vom Backend laden
+    async function loadReviews() {
+      const res = await fetch('http://localhost:8000/review_data');
+      const data = await res.json();
+
+      document.querySelector('.overall-rating strong').textContent = `⭐ ${data.average || 0}`;
+      document.querySelector('.overall-rating').innerHTML = `<strong>⭐ ${data.average || 0}</strong> von 5 — basierend auf ${data.total || 0} Bewertungen`;
+
+      commentList.innerHTML = '';
+      data.comments.forEach(c => addComment(c.comment, c.username, c.date));
+    }
+
+    loadReviews();
 </script>
 
 </body>
