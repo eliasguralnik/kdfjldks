@@ -1092,12 +1092,12 @@ if (sessionId) {
     // Sterne Logik
     stars.forEach(star => {
       star.addEventListener('click', async () => {
-        if (!sessionId) return alert('Bitte anmelden!');
+        if (!sessionId) return alert('Please login first');
         currentRating = parseInt(star.dataset.value);
         updateStars();
         output.textContent = `Du hast ${currentRating} Stern(e) gewählt`;
 
-        await fetch('http://localhost:8000/reviews', {
+        await fetch('https://server-amalia-website.onrender.com/reviews', {
           method: 'POST',
           headers: {
             'Content-Type': 'application/json',
@@ -1134,12 +1134,12 @@ if (sessionId) {
     }
 
     sendBtn.addEventListener('click', async () => {
-      if (!sessionId) return alert('Bitte anmelden!');
+      if (!sessionId) return alert('Please log in first');
       const text = commentInput.value.trim();
       if (!text) return;
       addComment(text);
 
-      await fetch('http://localhost:8000/comment', {
+      await fetch('https://server-amalia-website.onrender.com/comment', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -1166,7 +1166,7 @@ if (sessionId) {
 
     // Daten vom Backend laden
     async function loadReviews() {
-      const res = await fetch('http://localhost:8000/review_data');
+      const res = await fetch('https://server-amalia-website.onrender.com/review_data');
       const data = await res.json();
 
       document.querySelector('.overall-rating strong').textContent = `⭐ ${data.average || 0}`;
